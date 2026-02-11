@@ -9,7 +9,6 @@ The system streams live carbon intensity data from the **National Grid API** int
 The pipeline follows a microservices architecture orchestrated by Docker Containers.
 
 
-
 ### Data Flow Breakdown
 * **Extraction:** A custom Python Producer polls the National Grid API every 10 seconds for real-time carbon intensity and forecast data.
 * **Buffering:** Data is pushed to **Apache Kafka**, acting as a fault-tolerant buffer to prevent data loss during API rate-limiting or network spikes.
@@ -20,11 +19,16 @@ The pipeline follows a microservices architecture orchestrated by Docker Contain
 ## 📂 Project Structure
 ```text
 ├── greenpulse_pipeline/    
-│   ├── producer.py           # Script 1: National Grid API -> Kafka Ingestion
-│   ├── consumer.py           # Script 2: Kafka -> MinIO Storage (The Consumer)
-│   ├── snowflake_uploader.py # Script 3: MinIO -> Snowflake Migration Utility
-│   ├── docker-compose.yml    # Infrastructure (Kafka, Zookeeper, and MinIO)
-│   └── silver.sql            # SQL Transformation logic
+│   ├── REAL_TIME_CARBON_MONITOR.pbix # Power BI Dashboard File
+│   ├── consumer.py                   # Kafka -> MinIO Storage Consumer
+│   ├── docker-compose.yml            # Infrastructure (Kafka, Zookeeper, MinIO)
+│   ├── gold.sql                      # Final Analytical Views
+│   ├── goldnew.sql                   # Optimized Gold Layer Transformations
+│   ├── new.sql                       # Staging & Parsing Logic
+│   ├── producer.py                   # National Grid API -> Kafka Producer
+│   ├── silver.sql                    # Cleaned & Structured Data Layer
+│   ├── smart_consumer.py             # Advanced Multi-Topic Consumer
+│   └── snowflake_uploader.py         # MinIO -> Snowflake Migration Utility
 
 🚀 Getting Started
 1. Prerequisites
